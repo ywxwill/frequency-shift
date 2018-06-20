@@ -15,14 +15,6 @@
 %% and
 %% http://www.ieee.org/
 
-%%
-%% Support sites:
-%% http://www.michaelshell.org/tex/ieeetran/
-%% http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/
-%% and
-%% http://www.ieee.org/
-
-
 %%*************************************************************************
 %% Legal Notice:
 %% This code is offered as-is without any warranty either expressed or
@@ -347,10 +339,11 @@
 % was not built to handle multiple paragraphs
 %
 \author{Jianmin  Li,~
-		Zhaosheng Teng,~
-		and~Fu Zhang% <-this % stops a space
-		\thanks{Jianmin  Li, Zhaosheng Teng and Fu Zhang are with the College of Electrical and Information Engineering, Hunan University, Changsha 410082, China (e-mail: ljmdzyx@163.com; tengzs@126.com).} % <-this % stops a space
-		\thanks{Manuscript received March xx, 2017; revised xx xx, 2017. This work was supported by the National Natural Science Foundation of China under Grants 51377049.}}% <-this % stops a space
+		Zhaosheng Teng,~Yilu Liu,
+		and~Wenxuan Yao% <-this % stops a space
+		\thanks{J.  Li and Z. Teng are with the College of Electrical and Information Engineering, Hunan University, Changsha 410082, China (e-mail: ljmdzyx@163.com; tengzs@126.com).} % <-this % stops a space
+		\thanks{W. Yao and Y. Liu are with the Department of Electrical Engineering and Computer Science, the University of Tennessee, Knoxville, TN, 37996, USA (e-mails:wyao3@utk.edu, liu@utk.edu).}
+		\thanks{Manuscript received March xx, 2018; revised xx xx, 2018. This work was supported by the National Natural Science Foundation of China under Grants 51377049.}}% <-this % stops a space
 
 % note the % following the last \IEEEmembership and also \thanks - 
 % these prevent an unwanted space from occurring between the last author name
@@ -371,8 +364,8 @@
 % space somehow managed to creep in.
 
 % The paper headers
-\markboth{IEEE Transactions on Instrumentation and Measurement, VOL.\ xx, NO.\ x, March\ 2017} %
-{LI \MakeLowercase{\textit{et al.}}: A Novel Approach for Frequency Estimation in Power System}
+\markboth{IEEE PES Letter} %
+{LI \MakeLowercase{\textit{et al.}}: A Fast Frequency Estimation Using Frequency Shift and filter in Power System}
 % The only time the second header will appear is for the odd numbered pages
 % after the title page when using the twoside option.
 % 
@@ -483,8 +476,7 @@ x(n)=\sum_{h=1}^{H}\dfrac{A_h}{2}\left(e^{j\left(h\omega_r n+\varphi_h\right)}+e
 \end{figure}
 Let $\omega_\mathrm{nom}=2\pi /M$ denote the normalized nominal fundamental angular frequency of $x(n)$. By multiplying both sides of \eqref{eqn_4} by the exponential $e^{j\omega_\mathrm{nom}n}$, we have%=e^{j2\pi n/M},2\pi f_\mathrm{nom}/f_s=
 \begin{align}%=&x(n)e^{j\omega_\mathrm{nom}n}\notag\\
-x_s(n)=&\sum_{h=1}^{H}\dfrac{A_h}{2}\left(e^{j\left((h\omega_r+\omega_\mathrm{nom})n+\varphi_h\right)}\rig
-ht.\notag\\
+x_s(n)=&\sum_{h=1}^{H}\dfrac{A_h}{2}\left(e^{j\left((h\omega_r+\omega_\mathrm{nom})n+\varphi_h\right)}\right.\notag\\
 &\left.+e^{-j\left((h\omega_r -\omega_\mathrm{nom})n+\varphi_h\right)}\right).\label{eqn_5}
 \end{align}
 It can be known that the frequency components of $x(n)$ are moved from $h\omega_r$ and $-h\omega_r$ to $h\omega_r+\omega_\mathrm{nom}$ and $-h\omega_r+\omega_\mathrm{nom}$, respectively.

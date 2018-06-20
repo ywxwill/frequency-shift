@@ -328,7 +328,7 @@
 % not capitalized unless they are the first or last word of the title.
 % Linebreaks \\ can be used within to get better formatting as desired.
 % Do not put math or special symbols in the title.
-\title{A Novel Approach for Frequency Estimation in Power System}
+\title{A Fast Power Grid Frequency Estimation Approach Based on Frequency-Shift Filtering}
 %
 %
 % author names and IEEE memberships
@@ -366,7 +366,7 @@
 
 % The paper headers
 \markboth{IEEE PES Letter} %
-{LI \MakeLowercase{\textit{et al.}}: A Fast Frequency Estimation Using Frequency Shift and filter in Power System}
+{}
 % The only time the second header will appear is for the odd numbered pages
 % after the title page when using the twoside option.
 % 
@@ -390,12 +390,14 @@
 % As a general rule, do not put math, special symbols or citations
 % in the abstract or keywords.
 \begin{abstract}
-In this paper, a new method is presented for the frequency estimation of power signals in power networks. It is shown that the proposed algorithm can not only accurately estimate the frequency of power grid but also require a relatively small amount of process. A frequency shifted signal is first got by shifting the original power signal with the nominal fundamental frequency. Based on the frequency shifting signal, a moving average convolution filter is constructed to filter out its irrelevant frequency components. At last, through using the phase difference between arbitrary two points of the final signal after frequency shifting and filtering, the frequency of power system can be obtained. The efficiency of the proposed method in accurate frequency estimation of power signals is demonstrated through computer simulations.
+In this letter, a fast frequency estimation approach is proposed based on frequency-shift filtering. The original sampled signal is first frequency-shifted by a reference signal. Then a moving average convolution filter is applied on the shifted signal to eliminate the spectral interferences caused by synchronous sampling. Finally, the frequency of power system can be obtained using the phase difference between arbitrary two points of the filtered signal. 
+The algorithm has major advantages of low computational burden, which makes it appropriate for high reporting rate frequency measurement in embedded systems. Comprehensive simulations are conducted to validate the accuracy and efficiency of the proposed approach.
+
 \end{abstract}
 
 % Note that keywords are not normally used for peerreview papers.
 \begin{IEEEkeywords}
-Power system, discrete-time Fourier transform (DTFT), frequency estimation, frequency shifting, moving average filter.
+ Frequency estimation, frequency-shift filtering, high reporting rate moving average filter.
 \end{IEEEkeywords}
 
 % For peer review papers, you can put extra information on the cover

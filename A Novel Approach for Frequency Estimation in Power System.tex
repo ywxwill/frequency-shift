@@ -342,9 +342,11 @@
 \author{Jianmin  Li,~
 		Zhaosheng Teng,~Yilu Liu,
 		and~Wenxuan Yao% <-this % stops a space
-		\thanks{J.  Li and Z. Teng are with the College of Electrical and Information Engineering, Hunan University, Changsha 410082, China (e-mail: ljmdzyx@163.com; tengzs@126.com).} % <-this % stops a space
+		
+		\vspace*{-30pt}		
+		\thanks{J.  Li and Z. Teng are with the College of Electrical and Information Engineering, Hunan University, Changsha 410082, China} % <-this % stops a space
 		\thanks{W. Yao and Y. Liu are with the Department of Electrical Engineering and Computer Science, the University of Tennessee, Knoxville, TN, 37996, USA (e-mails:wyao3@utk.edu, liu@utk.edu).}
-		\thanks{Manuscript received March xx, 2018; revised xx xx, 2018. This work was supported by the National Natural Science Foundation of China under Grants 51377049.}}% <-this % stops a space
+		}% <-this % stops a space
 
 % note the % following the last \IEEEmembership and also \thanks - 
 % these prevent an unwanted space from occurring between the last author name
@@ -391,13 +393,13 @@
 % in the abstract or keywords.
 \begin{abstract}
 In this letter, a fast frequency estimation approach is proposed based on frequency-shift filtering. The original sampled signal is first frequency-shifted by a reference signal. Then a moving average convolution filter is applied on the shifted signal to eliminate the spectral interferences caused by synchronous sampling. Finally, the frequency of power system can be obtained using the phase difference between arbitrary two points of the filtered signal. 
-The algorithm has major advantages of low computational burden, which makes it appropriate for high reporting rate frequency measurement in embedded systems. Comprehensive simulations are conducted to validate the accuracy and efficiency of the proposed approach.
+The algorithm has major advantage of low computational burden, which makes it appropriate for high reporting rate frequency measurement in embedded systems. Comprehensive simulations are conducted to validate the accuracy and efficiency of the proposed approach.
 
 \end{abstract}
 
 % Note that keywords are not normally used for peerreview papers.
 \begin{IEEEkeywords}
- Frequency estimation, frequency-shift filtering, high reporting rate moving average filter.
+ Frequency estimation, frequency-shift filtering, high reporting rate, moving average filter.
 \end{IEEEkeywords}
 
 % For peer review papers, you can put extra information on the cover
@@ -432,34 +434,31 @@ The algorithm has major advantages of low computational burden, which makes it a
 
 %BAK
 %As a consequence of this, how to achieve the accuracy of frequency measurement has triggered a growing concern from both academics and businessmen.
-\IEEEPARstart{F}{requency} is a primary parameter in power system, being both an essential feedback quantity to show the stable operation of the power system and one of the important indicators to evaluate the power quality. Therefore, accurate estimation of electric frequency is the basis of operation, control, and regulation of power system and electric equipment. However, with the development of power system, a lot of power electronics equipment with nonlinear characteristic are applied and many renewable energy sources are used, which in turn not only seriously pollutes public electric networks but also affects the accuracy of frequency estimation.
+\IEEEPARstart{F}{requency} is one the most critical parameters to indicate the operation status of  power grid. Therefore, accurate  estimation of electric frequency is a vital task in phasor measurement units (PMUs) and digital relays. Several digital signal processing (DSP) techniques have been proposed so far in the literature to estimate the power grid frequency such as: discrete Fourier and wavelet transforms, least squares (LS), and also Kalman filter [2]-[3].
+Among them, Discrete Fourier transform (DFT) based methods is the most commonly
+used techniques in commercial PMUs  and digital relay for frequency estimation due to its advantage of high robustness, easy hardware implementation, and harmonic immunity 13]. To reduce the influence of picket fence effect and spectral leakage with asynchronous
+sampling, windowed interpolation DFT algorithms(WIDFT) were used to improve the  accuracy [28]–[30].
+Unfortunately, the WIDFT methods involve computationally expensive procedures of solving high-order equations.
+A recursive DFT (RDFT) calculation method was developed with significant reduction on computation. To achieve the high accuracy under  off-nominal condition, least square estimation and resample calculation is applied on RDFT[][]. This approach is used in  Frequency Disturbance
+Recorders (FDRs) for synchronized frequency measurement at single-phase distribution level power grid. However, for the conditions requiring high
+reporting rates, e.g., 120 or 240 Hz, implementations RDFT based methods
+lead to high computational efforts and bring challenges
+to meet the real-time requirement. Thus fast and accurate frequency estimation is still challenging issue. 
 
-Many algorithms have been proposed so far in the literature to estimate the frequency of power system. Broadly, these methods could be divided into two categories: time-domain and frequency-domain methods. Time-domain analysis schemes include quasi-synchronous sampling algorithm (QSSA) \cite{Zhou2011}, Kalman filter \cite{Bagheri2016}, Prony's method \cite{Zygarlicki2010} and MUSIC algorithm \cite{Lobos2006}. Generally, the implementation of time-domain methods are usually complex. Frequency-domain analysis approaches mainly based on the fast Fourier transform (FFT) and its improved algorithm, among which the windowed interpolated FFT (WIFFT)-based algorithm is the most representative \cite{Harris1978,Wen2011,Wen2014}. Unfortunately, the WIFFT methods involve computationally expensive procedures of solving high-order equations.
+ In this paper, a fast frequency estimation approach based on frequency-shift filtering algorithm is proposed. 
+ The main idea of the this algorithm is to shift fundamental components to 0Hz, and then use an convolution averaging filter to eliminate spectral interferences and noise. It has advantages of high accuracy and low computational complexity. 
 
-The main purpose of this paper is to develop an algorithm which can not only accurately estimate the frequency but also be easy to implement. The proposed method uses the original sampling sequence of the power system in the time domain and only needs few steps. First, the original sampling signal of the power system is frequency shifted by the nominal fundamental frequency. Subsequently, in order to realize maximize preservation of the desired frequency and inhibition of the other irrelevant frequency components, a moving average convolution filter (MACF) is constructed. Finally, by calculating the phase difference between any two points of the final signal by frequency shifting and filtering, the fundamental frequency of power system can be accurately estimated.
 
-The rest of this letter is organized as follows. The fundamental of proposed frequency estimation algorithm is detailed in section II. Section III presents the simulation results and analysis which are used to demonstrate the performance of our method in different conditions. Finally, the conclusion is drawn in Section IV.
 %----------------------------------------------------------------------
 % SECTION II:
 %----------------------------------------------------------------------
-\section{Proposed frequency estimation algorithm}
-The actual power grid signal can be given by
+\section{Proposed  algorithm}
+Assuming  actually power grid signal distorted by harmonic is sampled at  an interval $T_s=1/f_s$,  the sampled discrete-time signal $x(n)$ can be represented by
 \begin{equation}
-x_a(t)=\sum_{h=1}^{H}A_h\cos(2\pi hf_rt+\varphi_h)\label{eqn_1}
+x(n)\equiv x_a(nT_s)=\sum_{h=1}^{H}A_h\cos (h2\pi f_r/f_s+\varphi_h)\label{eqn_3}
 \end{equation}
-where $f_r$ is the real fundamental frequency of power system, $h$ stands for the order of harmonic, $A_h$ and $\varphi_h$ denote the amplitude and phase of power harmonics, respectively.
-
-Let $f_\mathrm{nom}$ be the nominal fundamental frequency, we have
-\begin{equation}
-f_\mathrm{nom}=f_r+\Delta f\label{eqn_2}
-\end{equation}
-where $\Delta f$ is the undesired asynchronous deviation in relation to the nominal fundamental frequency.
-
-The sampling of $x_a(t)$ with a fixed interval $T_s=1/f_s$ results in a discrete-time signal
-\begin{equation}
-x(n)\equiv x_a(nT_s)=\sum_{h=1}^{H}A_h\cos (h\omega_r n+\varphi_h)\label{eqn_3}
-\end{equation}
-where $-\infty<n<\infty$ and $\omega_r=2\pi f_r/f_s$ is the normalized real fundamental angular frequency of $x(n)$. Assume the sampling frequency is an integral multiple of the nominal fundamental frequency, that is, $f_s=Mf_\mathrm{nom}$, it follows that $\omega_r=2\pi f_r/(Mf_\mathrm{nom})$.
+where $f_r$ is the real fundamental frequency and $f_s$ is the sampling rate. $h$ stands for the order of harmonic, $A_h$ and $\varphi_h$ denote the amplitude and phase of power harmonics, respectively.
+We assume the sampling frequency $f_s$ is an integral multiple of the nominal frequency $f_\mathrm{nom}$ as $f_s=Mf_\mathrm{nom}$ and define normalized angular frequency as  $\omega_r=2\pi f_r/(Mf_\mathrm{nom})$. 
 
 According to the Euler identity, $x(n)$ can be rewritten as
 \begin{equation}
@@ -471,59 +470,61 @@ x(n)=\sum_{h=1}^{H}\dfrac{A_h}{2}\left(e^{j\left(h\omega_r n+\varphi_h\right)}+e
 %&+\left.\delta\left(h\omega_r n+\varphi_h+2\pi k\right)\right]\label{eqn_5}
 %\end{align}
 
-\begin{figure}
-	\centering
-	\includegraphics[width=3.5in]{Fig3.eps}
-	\caption{Magnitude spectrum of the $p$th order MACF with $p=1,2,3,4$.}
-	\label{fig_1}													
-\end{figure}
-Let $\omega_\mathrm{nom}=2\pi /M$ denote the normalized nominal fundamental angular frequency of $x(n)$. By multiplying both sides of \eqref{eqn_4} by the exponential $e^{j\omega_\mathrm{nom}n}$, we have%=e^{j2\pi n/M},2\pi f_\mathrm{nom}/f_s=
+
+
+Defining a reference signal to shift original sampled signal, it can be expressed as 
+
+\begin{equation}
+r(n)=e^{j\omega_\mathrm{nom}n}\label{eqn_yao}
+\end{equation}
+where $\omega_\mathrm{nom}=2\pi /M$.  
+Multiplying both sides of \eqref{eqn_4} by the exponential $r(n)$ in time domain, we can get shifted signal
+
 \begin{align}%=&x(n)e^{j\omega_\mathrm{nom}n}\notag\\
 x_s(n)=&\sum_{h=1}^{H}\dfrac{A_h}{2}\left(e^{j\left((h\omega_r+\omega_\mathrm{nom})n+\varphi_h\right)}\right.\notag\\
 &\left.+e^{-j\left((h\omega_r -\omega_\mathrm{nom})n+\varphi_h\right)}\right).\label{eqn_5}
 \end{align}
-It can be known that the frequency components of $x(n)$ are moved from $h\omega_r$ and $-h\omega_r$ to $h\omega_r+\omega_\mathrm{nom}$ and $-h\omega_r+\omega_\mathrm{nom}$, respectively.
 
-Then, $x_s(n)$ is undergone a MACF. But before we do that, let us first investigate the frequency characteristic of MACF. As we all know, the moving average (MA) filter of length $M$ can be expressed as 
+
+It can be seen from  \eqref{eqn_5} that the frequency components of $x(n)$ are shifted all from $h\omega_r$ and $-h\omega_r$ to $h\omega_r+\omega_\mathrm{nom}$ and $-h\omega_r+\omega_\mathrm{nom}$, respectively. Consequently, the spectral line of fundamental components are shifted around 0 Hz in frequency domain since the $f_r$ slight fluctuates around $f_\mathrm{nom}$.
+
+To eliminate the spectral interferences of harmonic, a moving average filter is applied on the shifted signal $x_s(n)$. The  moving average filter of length $M$ can be expressed as 
 \begin{equation}
 h_\mathrm{av}(m)=\begin{cases}
 1/M,\qquad &m=0,1,\ldots,M-1\\
 0, &\text{otherwise.}\\
 \end{cases}\label{eqn_6}
 \end{equation}
-Note that $M$ is also the ratio of the sampling frequency over the nominal frequency. And the discrete-time Fourier transform (DTFT) of $h_\mathrm{av}(m)$ is
+The frequency response of $h_\mathrm{av}(m)$ is
 \begin{equation}
 H(e^{j\omega})=\dfrac{1}{M}\sum_{n=0}^{M-1}e^{j\omega n}=\dfrac{\sin(\omega M/2)}{M\sin(\omega/2)}e^{-j\omega (M-1)/2}\label{eqn_7}
 \end{equation}
-and its magnitude spectra is
+and its magnitude frequency responses is
 \begin{equation}
 |H(e^{j\omega })|=\left|\dfrac{\sin(\omega M/2)}{M\sin(\omega/2)}\right|\mathrm{.}\label{eqn_8}
 \end{equation}
 Thus, $|H(e^{j\omega })|$ yields $0$ for the cases $\omega=2\pi k/M,k=0,1,\ldots,M-1$.
-%Figure \ref{fig_2} illustrates the graphs of the magnitude responses of $H(e^{j\omega})$.
-%\begin{figure}
-%	\centering
-%	\includegraphics[width=3.5in]{Fig2.eps}
-%	\caption{Magnitude responses of the MA filter.}
-%	\label{fig_2}													
-%\end{figure}
-%into two parts after frequency shifting, that is, the negative angular frequencies $\omega_n(h)=-h\omega_r+\omega_\mathrm{nom}$ and the positive angular frequencies $\omega_p(h)=h\omega_r+\omega_\mathrm{nom}$. while $\omega_p(1)=-\omega_r+\omega_\mathrm{nom}\approx2\omega_\mathrm{nom}$, $\omega_p(1)M/2\approx2\pi$ and its  corresponding magnitude yields $|H(e^{j\omega_p(1)})|\approx0$. when $h>1$, $\omega_n(h)=-h\omega_r+\omega_\mathrm{nom}\approx(1-h)\omega_\mathrm{nom}$, $\omega_n(h)M/2\approx(1-h)\pi$ and its corresponding magnitude yields $|H(e^{j\omega_n(h)})|\approx0$ while $\omega_p(h)=-h\omega_r+\omega_\mathrm{nom}\approx(1+h)\omega_\mathrm{nom}$, $\omega_p(h)M/2\approx(1+h)\pi$ and its corresponding magnitude yields $|H(e^{j\omega_p(h)})|\approx0$. Let $\omega_h=h\omega_r+\omega_\mathrm{nom}$ be the harmonic angular frequency. 
 
-Let us divide the normalized angular frequencies into two parts after frequency shifting, that is, the negative angular frequencies $\omega_n(h)=-h\omega_r+\omega_\mathrm{nom}$ and the positive angular frequencies $\omega_p(h)=h\omega_r+\omega_\mathrm{nom}$. Since $\omega_n(1)=\omega_\mathrm{nom}-\omega_r\approx0$ for $h=1$, from \eqref{eqn_8} we have $|H(e^{j\omega_n(1)}|\approx1$. In the same manner, it can be obtained that $|H(e^{j\omega_n(h)})|\approx0$ for $h\neq1$ and $|H(e^{j\omega_p(h)})|\approx0$, respectively. That is to say, only the frequency component $\omega_\mathrm{nom}-\omega_r$ is reserved and the other frequencies are inhibited after the MA filter.
+Let us divide the normalized angular frequencies into two parts after frequency shifting, that is, the negative angular frequencies $\omega_n(h)=-h\omega_r+\omega_\mathrm{nom}$ and the positive angular frequencies $\omega_p(h)=h\omega_r+\omega_\mathrm{nom}$. Since $\omega_n(1)=\omega_\mathrm{nom}-\omega_r\approx0$ for $h=1$, from \eqref{eqn_8} we have $|H(e^{j\omega_n(1)}|\approx1$. Similarity, it can be obtained that $|H(e^{j\omega_n(h)})|\approx0$ for $h\neq1$ and $|H(e^{j\omega_p(h)})|\approx0$, respectively. As as result, only the frequency component $\omega_\mathrm{nom}-\omega_r$ is reserved and the other frequencies are suppressed after the  filter.
 
-In practice application, in order to achieve better inhibitory effect while keep the desirable frequency during the process of filtering, a $p$th order MACF is constructed as
+In practice application,  to achieve better suppression effect on the interference, a $p$th order MACF is constructed as
 \begin{equation}
-h_p(n)=\begin{cases}
-\underbrace{h_{av}(m)*\cdots*h_{av}(m)}_{p},&m=0,1,\ldots,M-1\\
-0,&\text{otherwise}\\
-\end{cases}\label{eqn_9}
+h_p(n)=\underbrace{h_{av}(m)*\cdots*h_{av}(m)}_{p}
+\label{eqn_9}
 \end{equation}
-where $*$ denotes convolution operation, $p$ represents the number of the MA filters, and the length of the $p$th order MACF is $p(M-1)+1$. The magnitude spectra of the first order MACF to the fourth order MACF are illustrated in Fig.~\ref{fig_1}. With the aid of Fig.~\ref{fig_1}, we observe that the inhibition capacity of MACF is proportional to the filter order $p$ for the convolution theorem of  the Fourier Transform.
-%According to the convolution theorem of Fourier Transform, we know that if two signals are convolved in the time domain, then this is equivalent to multiplying their spectra in the frequency domain. To illustrate the point, 
+where $*$ denotes convolution operation, $p$ represents the number of the MA filters, and the length of the $p$th order MACF is $p(M-1)+1$. Since coefficients of MACF are constant, they can be pre-computed to decrease computational burden and only one time convolution calculation between $x_s(n)$ and $h_p(n)$ is needed. 
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=2.8in]{Fig3.eps}
+	\caption{Magnitude spectrum of the $p$th order MACF with $p=1,2,3,4$.}
+	\label{fig_1}	
+	\vspace*{-15pt}												
+\end{figure}
 
+The magnitude spectra of the first order MACF to the fourth order MACF are illustrated in Fig.~\ref{fig_1}. It can bee observed in Fig.~\ref{fig_1},  that the inhibition capacity of MACF is proportional to the filter order $p$.
 Finally, the signal after frequency shifting and MACF filtering can be approximated  as
 \begin{equation}
-x_f(n)\approx\sum_{n=-\infty}^{\infty}\dfrac{A_h}{2}e^{j\left((\omega_\mathrm{nom}-\omega_r)n+\varphi_1\right)}\label{eqn_10}
+x_f(n)=h_p(n)*x_s(n)\approx\sum_{n=-\infty}^{\infty}\dfrac{A_h}{2}e^{j\left((\omega_\mathrm{nom}-\omega_r)n+\varphi_1\right)}\label{eqn_10}
 \end{equation}
 %Fig.~\ref{fig_2} in the next page illustrates the computational procedure of the proposed algorithm.%In order to gain a better understanding of the procedure of our proposed method, we demonstrate the process graphically in
 
@@ -534,26 +535,38 @@ x_f(n)\approx\sum_{n=-\infty}^{\infty}\dfrac{A_h}{2}e^{j\left((\omega_\mathrm{no
 %	\label{fig_2}													
 %\end{figure*}
 
-Now, suppose that we select arbitrary two points $x_f(n_1)$ and $x_f(n_2)$ from $x_f(n)$. Then, it easily follows that
-%we may conclude that
-%Combined with the expression \eqref{eqn_2}, we also have
-%\begin{equation}
-%\omega_\mathrm{nom}-\omega_r=\dfrac{2\pi\Delta f}{Mf_\mathrm{nom}}
-%\end{equation}
-%By putting the two together, we have
+Then the frequency deviation can obtained using angle difference of two 
+two points in $x_f(n)$ as 
+
 \begin{equation}
-\omega_\mathrm{nom}-\omega_r=\dfrac{\arg(x_f(n_1))-\arg(x_f(n_2))}{n1-n2}.\label{eqn_11}
+\Delta f=\dfrac{(\arg(x_f(n_1))-\arg(x_f(n_2))Mf_\mathrm{nom}}{2\pi(n1-n2)}.\label{eqn_12}
 \end{equation}
-By combining \eqref{eqn_2} and \eqref{eqn_11}, we obtain the deviation frequency that
+Consequently, the estimated fundamental frequency is
 \begin{equation}
-\Delta f=\dfrac{(\omega_\mathrm{nom}-\omega_r)Mf_\mathrm{nom}}{2\pi}.\label{eqn_12}
-\end{equation}
-Consequently, the real fundamental frequency is
-\begin{equation}
-f_r=f_\mathrm{nom}+\Delta f\label{eqn_13}
+f_\mathrm{est}=f_\mathrm{nom}+\Delta f\label{eqn_13}
 \end{equation}
 
-It is worth pointing out that the duration of $x(n)$ is usually limited to $L$ samples ($0\leqslant n\leqslant L-1$) in practice. In other words, $x(n)$ is truncated by a rectangular window with the length is $L$ which will lead to a certain degree of the spectrum leakage. In spite of this, we will find that if the $L$ is long enough, the spectral leakage has little impact on our proposed algorithm.
+
+
+
+
+
+%Figure \ref{fig_2} illustrates the graphs of the magnitude responses of $H(e^{j\omega})$.
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=3.5in]{Fig2.eps}
+%	\caption{Magnitude responses of the MA filter.}
+%	\label{fig_2}													
+%\end{figure}
+%into two parts after frequency shifting, that is, the negative angular frequencies $\omega_n(h)=-h\omega_r+\omega_\mathrm{nom}$ and the positive angular frequencies $\omega_p(h)=h\omega_r+\omega_\mathrm{nom}$. while $\omega_p(1)=-\omega_r+\omega_\mathrm{nom}\approx2\omega_\mathrm{nom}$, $\omega_p(1)M/2\approx2\pi$ and its  corresponding magnitude yields $|H(e^{j\omega_p(1)})|\approx0$. when $h>1$, $\omega_n(h)=-h\omega_r+\omega_\mathrm{nom}\approx(1-h)\omega_\mathrm{nom}$, $\omega_n(h)M/2\approx(1-h)\pi$ and its corresponding magnitude yields $|H(e^{j\omega_n(h)})|\approx0$ while $\omega_p(h)=-h\omega_r+\omega_\mathrm{nom}\approx(1+h)\omega_\mathrm{nom}$, $\omega_p(h)M/2\approx(1+h)\pi$ and its corresponding magnitude yields $|H(e^{j\omega_p(h)})|\approx0$. Let $\omega_h=h\omega_r+\omega_\mathrm{nom}$ be the harmonic angular frequency. 
+
+
+
+
+
+%According to the convolution theorem of Fourier Transform, we know that if two signals are convolved in the time domain, then this is equivalent to multiplying their spectra in the frequency domain. To illustrate the point, 
+
+
 
 %----------------------------------------------------------------------
 % SECTION III: 

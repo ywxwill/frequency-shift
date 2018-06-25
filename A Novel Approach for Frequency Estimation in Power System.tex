@@ -517,11 +517,39 @@ h_p(n)=\underbrace{h_{av}(m)*\cdots*h_{av}(m)}_{p}
 where $*$ denotes convolution operation, $p$ represents the number of the MA filters, and the length of the $p$th order MACF is $p(M-1)+1$. Since coefficients of MACF are constant, they can be pre-computed to decrease computational burden and only one time convolution calculation between $x_s(n)$ and $h_p(n)$ is needed. 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=2.8in]{Fig3.eps}
+	\includegraphics[width=3.5in]{freqresponse.pdf}
 	\caption{Magnitude spectrum of the $p$th order MACF with $p=1,2,3,4$.}
 	\label{fig_1}	
-	\vspace*{-15pt}												
+	\vspace*{-10pt}												
 \end{figure}
+
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=3.5in]{frequencyrangle.pdf}
+	\caption{Magnitude spectrum of the $p$th order MACF with $p=1,2,3,4$.}
+	\label{fig_2}	
+	\vspace*{-10pt}												
+\end{figure}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=3.5in]{whitenoise.pdf}
+	\caption{Magnitude spectrum of the $p$th order MACF with $p=1,2,3,4$.}
+	\label{fig_3}	
+	\vspace*{-10pt}												
+\end{figure}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=3.5in]{har.pdf}
+	\caption{Magnitude spectrum of the $p$th order MACF with $p=1,2,3,4$.}
+	\label{fig_4}	
+	\vspace*{-10pt}												
+\end{figure}
+
+
+
 
 The magnitude spectra of the first order MACF to the fourth order MACF are illustrated in Fig.~\ref{fig_1}. It can bee observed in Fig.~\ref{fig_1},  that the inhibition capacity of MACF is proportional to the filter order $p$.
 Finally, the signal after frequency shifting and MACF filtering can be approximated  as

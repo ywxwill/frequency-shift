@@ -277,7 +277,7 @@
 % not capitalized unless they are the first or last word of the title.
 % Linebreaks \\ can be used within to get better formatting as desired.
 % Do not put math or special symbols in the title.
-\title{A Fast Power Grid Frequency Estimation Approach Based on Frequency-Shift Filtering}
+\title{A Fast Power Grid Frequency Estimation Approach Using Frequency-Shift Filtering}
 %
 %
 % author names and IEEE memberships
@@ -293,8 +293,8 @@
 		and~Wenxuan Yao% <-this % stops a space
 		
 			
-		\thanks{J.  Li and Z. Teng are with the College of Electrical and Information Engineering, Hunan University, Changsha 410082, China} % <-this % stops a space
-		\thanks{W. Yao and Y. Liu are with the Department of Electrical Engineering and Computer Science, the University of Tennessee, Knoxville, TN, 37996, USA (e-mails:wyao3@utk.edu, liu@utk.edu).}
+		\thanks{J.  Li and Z. Teng are with the College of Electrical and Information Engineering, Hunan University, Changsha 410082, China(e-mail: ljmdzyx@163.com; tengzs@126.com)} % <-this % stops a space
+		\thanks{W. Yao and Y. Liu are with the Department of Electrical Engineering and Computer Science, the University of Tennessee, Knoxville, TN, 37996, USA and Oak Ridge National Laboratory, Oak Ridge, TN, USA, 37831 (e-mails:wyao3@utk.edu, liu@utk.edu).}
 		}% <-this % stops a space
 
 % note the % following the last \IEEEmembership and also \thanks - 
@@ -385,13 +385,13 @@ The algorithm has major advantage of low computational burden, which makes it ap
 %As a consequence of this, how to achieve the accuracy of frequency measurement has triggered a growing concern from both academics and businessmen.
 \IEEEPARstart{F}{requency} is one the most critical parameters to indicate the operation status of  power grid. Therefore, accurate  estimation of  frequency is a vital task in phasor measurement units (PMUs) and digital relays.
 
-Several digital signal processing  techniques have been proposed so far in the literature to estimate the power grid frequency such as: discrete Fourier and wavelet transforms, least squares (LS), and  Kalman filter.
-Among them, Discrete Fourier transform (DFT) based methods is the most commonly
-used techniques in commercial PMUs  and digital relays for frequency estimation due to its advantage of easy hardware implementation, and harmonic immunity. To reduce the influence of spectral leakage with asynchronous sampling, Windowed interpolation DFT (WIDFT) algorithm is used to improve the  accuracy.
+Several digital signal processing  techniques have been proposed so far in the literature to estimate the power grid frequency such as: Discrete Fourier transform (DFT) \cite{7438889} and wavelet transform\cite{7981350}, Prony\cite{8263521}, and  Kalman filter\cite{Bagheri2016}.
+Among them, DFT based methods is the most commonly
+used techniques in commercial PMUs  and digital relays for frequency estimation due to its advantage of easy hardware implementation, and harmonic immunity. To reduce the influence of spectral leakage with asynchronous sampling, Windowed Interpolation DFT (WIDFT) algorithm is used to improve the  accuracy\cite{4956674}.
 Unfortunately, the WIDFT methods involve computationally expensive procedures of solving high-order equations.
-A recursive DFT (RDFT) calculation method was developed with significant reduction on computation complexity. To achieve the high accuracy under  off-nominal condition, least square estimation and resample calculation is applied on RDFT [][]. This approach is successfully used in  Frequency Disturbance
-Recorders (FDRs) for synchronized frequency measurement at distribution level power grid. However, for the conditions requiring high
-reporting rates, e.g., 120 or 240 Hz, the execution time of RDFT in real hardware implementation can not meet the real-time requirement. Therefore the necessity to explore a more efficient frequency estimation approach with   satisfactory performance arises.
+A recursive DFT (RDFT) calculation method was developed by A.G. Phadke and J. S. Thorp with significant reduction on computational complexity\cite{5519136}. To achieve the high accuracy under  off-nominal condition, least square estimation and resample calculation is applied on RDFT \cite{chenjian}. This approach is successfully used in  Frequency Disturbance
+Recorders (FDRs) for synchronized frequency measurement at distribution level power grid\cite{7265090}. However, for the conditions requiring high
+reporting rates, e.g., 120 or 240 Hz, the execution time of RDFT in real hardware implementation  of FDR can not meet the real-time requirement. Therefore the necessity to explore a more efficient frequency estimation approach with   satisfactory performance arises.
 
  In this paper, a fast frequency estimation approach is proposed. 
  The main idea of the this algorithm is to shift fundamental components to 0 Hz, and then use an convolution averaging filter (CAF) to eliminate spectral interferences and noise. It has major advantages of high accuracy and low computational complexity compared with RDFT approach. 
@@ -421,7 +421,6 @@ x(n)=\sum_{h=1}^{H}\dfrac{A_h}{2}\left(e^{j\left(h\omega_r n+\varphi_h\right)}+e
 
 
 Defining a reference signal to shift original sampled signal, it can be expressed as 
-
 \begin{equation}
 r(n)=e^{j\omega_\mathrm{nom}n}\label{eqn_yao}
 \end{equation}
@@ -432,7 +431,6 @@ Multiplying both sides of \eqref{eqn_4} by the exponential $r(n)$ in time domain
 x_s(n)=&\sum_{h=1}^{H}\dfrac{A_h}{2}\left(e^{j\left((h\omega_r+\omega_\mathrm{nom})n+\varphi_h\right)}\right.\notag\\
 &\left.+e^{-j\left((h\omega_r -\omega_\mathrm{nom})n+\varphi_h\right)}\right).\label{eqn_5}
 \end{align}
-
 
 It can be seen from  \eqref{eqn_5} that the frequency components of $x(n)$ are shifted all from $h\omega_r$ and $-h\omega_r$ to $h\omega_r+\omega_\mathrm{nom}$ and $-h\omega_r+\omega_\mathrm{nom}$, respectively. Consequently, the spectral line of fundamental components are shifted around 0 Hz in frequency domain since the $f_r$ slight fluctuates around $f_\mathrm{nom}$.
 
@@ -453,7 +451,7 @@ and its magnitude frequency responses is
 \end{equation}
 Thus, $|H(e^{j\omega })|$ yields $0$ for the cases $\omega=2\pi k/M,k=0,1,\ldots,M-1$.
 
-Let us divide the\ref{Harris1978} normalized angular frequencies into two parts after frequency shifting, that is, the negative angular frequencies $\omega_n(h)=-h\omega_r+\omega_\mathrm{nom}$ and the positive angular frequencies $\omega_p(h)=h\omega_r+\omega_\mathrm{nom}$. Since $\omega_n(1)=\omega_\mathrm{nom}-\omega_r\approx0$ for $h=1$, from \eqref{eqn_8} we have $|H(e^{j\omega_n(1)}|\approx1$. Similarity, it can be obtained that $|H(e^{j\omega_n(h)})|\approx0$ for $h\neq1$ and $|H(e^{j\omega_p(h)})|\approx0$, respectively. As as result, only the frequency component $\omega_\mathrm{nom}-\omega_r$ is reserved and the other frequencies are suppressed after the  filter.
+Let us divide the normalized angular frequencies into two parts after frequency shifting, that is, the negative angular frequencies $\omega_n(h)=-h\omega_r+\omega_\mathrm{nom}$ and the positive angular frequencies $\omega_p(h)=h\omega_r+\omega_\mathrm{nom}$. Since $\omega_n(1)=\omega_\mathrm{nom}-\omega_r\approx0$ for $h=1$, from \eqref{eqn_8} we have $|H(e^{j\omega_n(1)}|\approx1$. Similarity, it can be obtained that $|H(e^{j\omega_n(h)})|\approx0$ for $h\neq1$ and $|H(e^{j\omega_p(h)})|\approx0$, respectively. As as result, only the frequency component $\omega_\mathrm{nom}-\omega_r$ is reserved and the other frequencies are suppressed after the  filter.
 
 To achieve better suppression effect on the interference, a $p$th order MACF is constructed as
 
@@ -463,39 +461,35 @@ h_p(n)=\underbrace{h_{av}(m)*\cdots*h_{av}(m)}_{p}\label{eqn_9}
 where $*$ denotes convolution operation, $p$ represents the number of the CAF, and the length of the $p$th order CAF is $p(M-1)+1$. Since coefficients of CAF are constant, they can be pre-computed to decrease computational burden and only one time convolution calculation between $x_s(n)$ and $h_p(n)$ is needed. 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=3.5in]{freqresponse.pdf}
+	\includegraphics[width=3.5in]{freqresponse2.eps}
 		
 	\caption{Magnitude spectrum of the $p$th order MACF with $p=1,2,3,4$.}
-	\label{fig_1}	
-	\vspace*{-10pt}												
+	\label{fig_1}											
 \end{figure}
 
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=3.5in]{frequencyrangle.pdf}
+	\includegraphics[width=3.5in]{frequencyrangle2.eps}
 	
 	\caption{Frequency range test result}
-	\label{fig_2}	
-	\vspace*{-10pt}												
+	\label{fig_2}											
 \end{figure}
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=3.5in]{whitenoise.pdf}
+	\includegraphics[width=3.5in]{whitenoise2.eps}
 	
 	\caption{Noise tolerance test result}
-	\label{fig_3}	
-	\vspace*{-10pt}												
+	\label{fig_3}											
 \end{figure}
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=3.5in]{har.pdf}
+	\includegraphics[width=3.5in]{har2.eps}
 		
 	\caption{Harmonic distortion test result }
-	\label{fig_4}	
-	\vspace*{-10pt}												
+	\label{fig_4}									
 \end{figure}
 
 
@@ -538,7 +532,7 @@ f_\mathrm{est}=f_\mathrm{nom}+\Delta f\label{eqn_13}
 % SECTION III: 
 %----------------------------------------------------------------------
 \section{Simulation results and analysis}
-Simulations are conducted to validate the performance of the proposed approach. The performance is also compared with FDR algorithm, which is denoted as RDFT in this section.
+Simulations are conducted to validate the performance of the proposed approach. The performance is also compared with FDR algorithm\cite{chenjian,7265090}, which is denoted as RDFT in this section.
 The nominal frequency $f_\mathrm{nom}$ is 60 Hz and the sampling rate $f_s$ is 1440 Hz. Note that both algorithms were implemented in a “sliding window” approach, i.e., continuously shifting the estimation window by a single sample, which means that the frequency estimation rate is equal to sampling rate. Since the order $p$ influences of accuracy and computational burden, the proposed approach with $p$ from 1 to 4 are evaluated. For each test scenario, 10000 simulation runs have been performed to evaluate the statistical properties.  
 
 For the frequency range test, the  frequency of  input sinusoidal signal  varies from 59.9 Hz to 60.1 Hz with the step 0.01 Hz/s. The results is shown in Fig.\ref{fig_2}. It can be seen that accuracy of the proposed method is proportional to the $p$. Moreover, the proposed method with  $p\geq2$ can offer a better accuracy compared to the RDFT.
@@ -547,34 +541,36 @@ To evaluate the performance with white noise, Gaussian white noise with zero mea
 20 to 100 dB at an increment of 10 dB. The Cramer–Rao lower bound (CRLB) is also used to provide a quantitative benchmark of
  measurement error as shown in Fig.\ref{fig_3}. In this semilog
 plot, it can be seen that the proposed method with larger $p$ is closer
-to the CRLB. The results also  demonstrates that the the proposed method with $p\geq3$ has high reliability and accuracy in a noisy signal environment than conventional RDFT.
+to the CRLB. The results also  demonstrates that the the proposed method with $p\geq2$ has high reliability and accuracy in a noisy signal environment than conventional RDFT.
 
 For harmonic distortion  test, the test
 signal consists of a fundamental frequency component and
 an odd harmonic component ranging from 3rd order  to 11th order. The magnitude is 0.1 p.u (20 dB with respect to the fundamental 
-component), which is the worst condition according to the IEEE  C37.118 standard. Besides, 80 dB white noise is added, which is  selected based on the study of noise at the distribution level grid in [27]. From Fig.\ref{fig_4}, the error of the proposed method is whtin 0.2 mHz and much less than the 5m Hz requirements for P-class PMU in the C37 standard. We can conclude that the proposed method is immune to the harmonic distortion.
+component), which is the worst condition according to the IEEE  C37.118 standard\cite{c37}. Besides, 80 dB white noise is added, which is  selected based on the study of noise at the distribution level grid in Ref.\cite{7051271}. From Fig.\ref{fig_4}, the error of the proposed method is whtin 0.2 mHz and much less than the 5m Hz requirements for P-class PMU in the C37 standard. We can conclude that the proposed method is immune to the harmonic distortion.
 
 The comparative results of computation time  are listed in Table~\ref{table_1}. The  results confirm the superiority
 of the proposed algorithm in lower computational complexity. Taking account all the above results, $p=3$ can be considered as reasonable selection in practical implementation since keeping increasing $p$ does not improve the performance significantly but introducing much higher computational effort.
  
 \begin{table}
-	
-	\caption{Comparison of  Execution Time for 10000 simulation run}
-	
-	\includegraphics[width=3in]{table.pdf}
-	
-	\label{table_1}
+	\renewcommand{\arraystretch}{1.3}
+	\caption{Comparison of execution time for 10000 simulation run}
+	\label{table_1}%自行修改索引号
 	\centering
-	%\scriptsize
-	
-	\end{table}
-
+	\begin{tabular}{cccccc}
+		\toprule
+		\multirow{2}*{Method}   & \multirow{2}*{RDFT} & \multicolumn{4}{c}{Proposed method} \\
+		\cmidrule{3-6}          & &$p$=1    &   $p$=2    &    $p$=3 & $p$=4    \\
+		\midrule
+		Time(s) & 2.57 &   0.423    &   0.444   &  0.523 & 0.796 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
 
 %----------------------------------------------------------------------
 % SECTION IV: Conclusion
 %----------------------------------------------------------------------
 \section{Conclusion}
-In this letter, a novel  frequency estimation\cite{Wen2011} algorithm \cite{Lobos2006,Lobos2006}combining frequency shifting and convolution average filtering is proposed.The simulation results show that the proposed frequency estimation algorithm has merit of low computational complexity, robust performance in the presence of noise, harmonic and off-nominal conditions, which is promising for the real-time application in digital relay and and high reporting synchronized measurement devices\cite{Zhou2011}.
+In this letter, a novel  frequency estimation algorithmcombining frequency shifting and convolution average filtering is proposed.The simulation results show that the proposed frequency estimation algorithm has merit of low computational complexity, robust performance in the presence of noise, harmonic and off-nominal conditions, which is promising for the real-time application in digital relay and and high reporting synchronized measurement devices.
 
 \bibliographystyle{IEEEtran}
 \bibliography{IEEEabrv,FreqEs}

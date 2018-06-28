@@ -389,7 +389,7 @@ Several digital signal processing  techniques have been proposed so far in the l
 Among them, Discrete Fourier transform (DFT) based methods is the most commonly
 used techniques in commercial PMUs  and digital relays for frequency estimation due to its advantage of easy hardware implementation, and harmonic immunity. To reduce the influence of spectral leakage with asynchronous sampling, Windowed interpolation DFT (WIDFT) algorithm is used to improve the  accuracy.
 Unfortunately, the WIDFT methods involve computationally expensive procedures of solving high-order equations.
-A recursive DFT (RDFT) calculation method was developed with significant reduction on computation complexity. To achieve the high accuracy under  off-nominal condition, least square estimation and resample calculation is applied on RDFT[][]. This approach is successfully used in  Frequency Disturbance
+A recursive DFT (RDFT) calculation method was developed with significant reduction on computation complexity. To achieve the high accuracy under  off-nominal condition, least square estimation and resample calculation is applied on RDFT [][]. This approach is successfully used in  Frequency Disturbance
 Recorders (FDRs) for synchronized frequency measurement at distribution level power grid. However, for the conditions requiring high
 reporting rates, e.g., 120 or 240 Hz, the execution time of RDFT in real hardware implementation can not meet the real-time requirement. Therefore the necessity to explore a more efficient frequency estimation approach with   satisfactory performance arises.
 
@@ -574,7 +574,7 @@ of the proposed algorithm in lower computational complexity. Taking account all 
 % SECTION IV: Conclusion
 %----------------------------------------------------------------------
 \section{Conclusion}
-In this letter, a novel  frequency estimation algorithm combining frequency shifting and convolution average filtering is proposed.The simulation results show that the proposed frequency estimation algorithm has merit of low computational complexity, robust performance in the presence of noise, harmonic and off-nominal conditions, which is promising for the real-time application in digital relay and and high reporting synchronized measurement devices.
+In this letter, a novel  frequency estimation\cite{Wen2011} algorithm \cite{Lobos2006,Lobos2006}combining frequency shifting and convolution average filtering is proposed.The simulation results show that the proposed frequency estimation algorithm has merit of low computational complexity, robust performance in the presence of noise, harmonic and off-nominal conditions, which is promising for the real-time application in digital relay and and high reporting synchronized measurement devices\cite{Zhou2011}.
 
 \bibliographystyle{IEEEtran}
 \bibliography{IEEEabrv,FreqEs}

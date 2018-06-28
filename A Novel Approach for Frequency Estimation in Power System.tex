@@ -1,56 +1,4 @@
-%% bare_jrnl.tex
-%% V1.4a
-%% 2014/09/17
-%% by Michael Shell
-% by Michael Shell
-%% see http://www.michaelshell.org/
-%% for current contact information.
-%%
-%% This is a skeleton file demonstrating the use of IEEEtran.cls
-%% (requires IEEEtran.cls version 1.8a or later) with an IEEE
-%% journal paper.
-%%
-%% Support sites:
-%% http://www.michaelshell.org/tex/ieeetran/
-%% http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/
-%% and
-%% http://www.ieee.org/
 
-%%*************************************************************************
-%% Legal Notice:
-%% This code is offered as-is without any warranty either expressed or
-%% implied; without even the implied warranty of MERCHANTABILITY or
-%% FITNESS FOR A PARTICULAR PURPOSE! 
-%% User assumes all risk.
-%% In no event shall IEEE or any contributor to this code be liable for
-%% any damages or losses, including, but not limited to, incidental,
-%% consequential, or any other damages, resulting from the use or misuse
-%% of any information contained here.
-%%
-%% All comments are the opinions of their respective authors and are not
-%% necessarily endorsed by the IEEE.
-%%
-%% This work is distributed under the LaTeX Project Public License (LPPL)
-%% ( http://www.latex-project.org/ ) version 1.3, and may be freely used,
-%% distributed and modified. A copy of the LPPL, version 1.3, is included
-%% in the base LaTeX documentation of all distributions of LaTeX released
-%% 2003/12/01 or later.
-%% Retain all contribution notices and credits.
-%% ** Modified files should be clearly indicated as such, including  **
-%% ** renaming them and changing author support contact information. **
-%%
-%% File list of work: IEEEtran.cls, IEEEtran_HOWTO.pdf, bare_adv.tex,
-%%                    bare_conf.tex, bare_jrnl.tex, bare_conf_compsoc.tex,
-%%                    bare_jrnl_compsoc.tex, bare_jrnl_transmag.tex
-%%*************************************************************************
-
-
-% *** Authors should verify (and, if needed, correct) their LaTeX system  ***
-% *** with the testflow diagnostic prior to trusting their LaTeX platform ***
-% *** with production work. IEEE's font choices and paper sizes can       ***
-% *** trigger bugs that do not appear when using other class files.       ***                          ***
-% The testflow support page is at:
-% http://www.michaelshell.org/tex/testflow/
 \documentclass[journal,twoside]{IEEEtran}
 %\documentclass[12pt,draftcls,onecolumn,journal]{IEEEtran}
 \usepackage{amsmath}
@@ -436,19 +384,16 @@ The algorithm has major advantage of low computational burden, which makes it ap
 
 %BAK
 %As a consequence of this, how to achieve the accuracy of frequency measurement has triggered a growing concern from both academics and businessmen.
-\IEEEPARstart{F}{requency} is one the most critical parameters to indicate the operation status of  power grid. Therefore, accurate  estimation of electric frequency is a vital task in phasor measurement units (PMUs) and digital relays. Several digital signal processing (DSP) techniques have been proposed so far in the literature to estimate the power grid frequency such as: discrete Fourier and wavelet transforms, least squares (LS), and also Kalman filter [2]-[3].
+\IEEEPARstart{F}{requency} is one the most critical parameters to indicate the operation status of  power grid. Therefore, accurate  estimation of  frequency is a vital task in phasor measurement units (PMUs) and digital relays. Several digital signal processing  techniques have been proposed so far in the literature to estimate the power grid frequency such as: discrete Fourier and wavelet transforms, least squares (LS), and  Kalman filter.
 Among them, Discrete Fourier transform (DFT) based methods is the most commonly
-used techniques in commercial PMUs  and digital relay for frequency estimation due to its advantage of high robustness, easy hardware implementation, and harmonic immunity 13]. To reduce the influence of picket fence effect and spectral leakage with asynchronous
-sampling, windowed interpolation DFT algorithms(WIDFT) were used to improve the  accuracy [28]–[30].
+used techniques in commercial PMUs  and digital relay for frequency estimation due to its advantage of easy hardware implementation, and harmonic immunity. To reduce the influence of spectral leakage with asynchronous sampling, windowed interpolation DFT (WIDFT) algorithm is used to improve the  accuracy.
 Unfortunately, the WIDFT methods involve computationally expensive procedures of solving high-order equations.
-A recursive DFT (RDFT) calculation method was developed with significant reduction on computation. To achieve the high accuracy under  off-nominal condition, least square estimation and resample calculation is applied on RDFT[][]. This approach is used in  Frequency Disturbance
-Recorders (FDRs) for synchronized frequency measurement at single-phase distribution level power grid. However, for the conditions requiring high
-reporting rates, e.g., 120 or 240 Hz, implementations RDFT based methods
-lead to high computational efforts and bring challenges
-to meet the real-time requirement. Thus fast and accurate frequency estimation is still challenging issue. 
+A recursive DFT (RDFT) calculation method was developed with significant reduction on computation. To achieve the high accuracy under  off-nominal condition, least square estimation and resample calculation is applied on RDFT[][]. This approach is successfully used in  Frequency Disturbance
+Recorders (FDRs) for synchronized frequency measurement at distribution level power grid. However, for the conditions requiring high
+reporting rates, e.g., 120 or 240 Hz, the execution time of RDFT in real hardware implementation can not meet the real-time requirement. Therefore the necessity to explore a more efficient frequency estimation approach with   satisfactory performance arises.
 
- In this paper, a fast frequency estimation approach based on frequency-shift filtering algorithm is proposed. 
- The main idea of the this algorithm is to shift fundamental components to 0Hz, and then use an convolution averaging filter to eliminate spectral interferences and noise. It has advantages of high accuracy and low computational complexity. 
+ In this paper, a fast frequency estimation approach is proposed. 
+ The main idea of the this algorithm is to shift fundamental components to 0Hz, and then use an convolution averaging filter to eliminate spectral interferences and noise. It has major advantages of high accuracy and low computational complexity compared with RDFT. 
 
 
 %----------------------------------------------------------------------
@@ -512,12 +457,14 @@ Let us divide the normalized angular frequencies into two parts after frequency 
 In practice application,  to achieve better suppression effect on the interference, a $p$th order MACF is constructed as
 \begin{equation}
 h_p(n)=\underbrace{h_{av}(m)*\cdots*h_{av}(m)}_{p}
+\vspace*{-10pt}	
 \label{eqn_9}
 \end{equation}
 where $*$ denotes convolution operation, $p$ represents the number of the MA filters, and the length of the $p$th order MACF is $p(M-1)+1$. Since coefficients of MACF are constant, they can be pre-computed to decrease computational burden and only one time convolution calculation between $x_s(n)$ and $h_p(n)$ is needed. 
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=3.5in]{freqresponse.pdf}
+	\vspace*{-20pt}	
 	\caption{Magnitude spectrum of the $p$th order MACF with $p=1,2,3,4$.}
 	\label{fig_1}	
 	\vspace*{-10pt}												
@@ -527,6 +474,7 @@ where $*$ denotes convolution operation, $p$ represents the number of the MA fil
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=3.5in]{frequencyrangle.pdf}
+	\vspace*{-20pt}	
 	\caption{Magnitude spectrum of the $p$th order MACF with $p=1,2,3,4$.}
 	\label{fig_2}	
 	\vspace*{-10pt}												
@@ -535,6 +483,7 @@ where $*$ denotes convolution operation, $p$ represents the number of the MA fil
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=3.5in]{whitenoise.pdf}
+	\vspace*{-20pt}	
 	\caption{Magnitude spectrum of the $p$th order MACF with $p=1,2,3,4$.}
 	\label{fig_3}	
 	\vspace*{-10pt}												
@@ -543,6 +492,7 @@ where $*$ denotes convolution operation, $p$ represents the number of the MA fil
 \begin{figure}[t]
 	\centering
 	\includegraphics[width=3.5in]{har.pdf}
+	\vspace*{-20pt}	
 	\caption{Magnitude spectrum of the $p$th order MACF with $p=1,2,3,4$.}
 	\label{fig_4}	
 	\vspace*{-10pt}												
@@ -581,20 +531,6 @@ f_\mathrm{est}=f_\mathrm{nom}+\Delta f\label{eqn_13}
 
 
 
-%Figure \ref{fig_2} illustrates the graphs of the magnitude responses of $H(e^{j\omega})$.
-%\begin{figure}
-%	\centering
-%	\includegraphics[width=3.5in]{Fig2.eps}
-%	\caption{Magnitude responses of the MA filter.}
-%	\label{fig_2}													
-%\end{figure}
-%into two parts after frequency shifting, that is, the negative angular frequencies $\omega_n(h)=-h\omega_r+\omega_\mathrm{nom}$ and the positive angular frequencies $\omega_p(h)=h\omega_r+\omega_\mathrm{nom}$. while $\omega_p(1)=-\omega_r+\omega_\mathrm{nom}\approx2\omega_\mathrm{nom}$, $\omega_p(1)M/2\approx2\pi$ and its  corresponding magnitude yields $|H(e^{j\omega_p(1)})|\approx0$. when $h>1$, $\omega_n(h)=-h\omega_r+\omega_\mathrm{nom}\approx(1-h)\omega_\mathrm{nom}$, $\omega_n(h)M/2\approx(1-h)\pi$ and its corresponding magnitude yields $|H(e^{j\omega_n(h)})|\approx0$ while $\omega_p(h)=-h\omega_r+\omega_\mathrm{nom}\approx(1+h)\omega_\mathrm{nom}$, $\omega_p(h)M/2\approx(1+h)\pi$ and its corresponding magnitude yields $|H(e^{j\omega_p(h)})|\approx0$. Let $\omega_h=h\omega_r+\omega_\mathrm{nom}$ be the harmonic angular frequency. 
-
-
-
-
-
-%According to the convolution theorem of Fourier Transform, we know that if two signals are convolved in the time domain, then this is equivalent to multiplying their spectra in the frequency domain. To illustrate the point, 
 
 
 
@@ -624,7 +560,9 @@ of the proposed algorithm in lower computational complexity. Taking account all 
 \begin{table}
 	
 	\caption{Comparison of  Execution Time for 10,000 simulation run}
+\vspace*{-5pt}	
 	\includegraphics[width=3in]{table.pdf}
+	\vspace*{-20pt}	
 	\label{table_1}
 	\centering
 	%\scriptsize
@@ -636,7 +574,7 @@ of the proposed algorithm in lower computational complexity. Taking account all 
 % SECTION IV: Conclusion
 %----------------------------------------------------------------------
 \section{Conclusion}
-In order to estimate the frequency of power system accurately, a new frequency estimation algorithm is proposed in this paper. The steps to calculate the frequency of power system by our method are very simple which only includes frequency shifting and MACF filtering. Comparing with some typical algorithms by computer simulation, it shows that the proposed frequency estimation algorithm has such advantages as easy realization, high precision and strong anti-noise performance.
+A novel  frequency estimation algorithm is proposed in this paper. The steps to calculate the frequency of power system by our method are very simple which only includes frequency shifting and MACF filtering. The simulation results show that the proposed frequency estimation algorithm has advantages of low computational complexity, robust performance in the presence of noise, harmonic and off-nominal conditions.
 
 \bibliographystyle{IEEEtran}
 \bibliography{IEEEabrv,FreqEs}

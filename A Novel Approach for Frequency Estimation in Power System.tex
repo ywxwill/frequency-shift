@@ -9,9 +9,12 @@
 %\newcounter{mytempeqncnt}%该宏包给跨行公式使用
 \usepackage{multirow,booktabs}
 \usepackage{graphicx}
+
 \usepackage{stfloats}
 \usepackage[cmyk]{xcolor}
 \usepackage[tight,footnotesize]{subfigure}
+\usepackage[utf8x]{inputenc}
+\usepackage{color}
 %
 %
 
@@ -386,7 +389,8 @@ The approach has major advantages of low computational burden and strong anti-no
 %As a consequence of this, how to achieve the accuracy of frequency measurement has triggered a growing concern from both academics and businessmen.
 \IEEEPARstart{F}{requency} is one the most critical parameters to indicate the operation status of  power grid. Therefore, accurate and prompt estimation of frequency is a critical task of wide-area measurement system.
 
-Several digital signal processing  techniques have been proposed  in the literature to estimate the power grid frequency such as: Discrete Fourier transform (DFT)\cite{7438889}, wavelet transform\cite{7981350}, Prony\cite{8263521}, and  Kalman filter\cite{Bagheri2016}.
+Several digital signal processing   proposed  in the literature to estimate the power grid frequency such as: Discrete Fourier transform (DFT)\cite{7438889}, wavelet transform\cite{7981350}, Prony\cite{8263521}, and  Kalman filter\cite{Bagheri2016}.
+
 Among them, DFT based methods is the most commonly
 used techniques in commercial Phasor Measurement Units (PMUs) and digital relays for frequency estimation due to its advantage of easy hardware implementation and harmonic immunity\cite{7277049,5876287}. To reduce the influence of spectral leakage, Windowed Interpolation DFT (WIDFT) algorithm was used to improve the performance under the conditions of asynchronous sampling\cite{4956674}.
 However, the WIDFT involve computationally expensive procedures of solving high-order equations.
@@ -438,8 +442,8 @@ x_s(n)=&\sum_{h=1}^{H}\dfrac{A_h}{2}\left(e^{j\left((h\omega_r+\omega_\mathrm{no
 \end{figure}
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=3.5in]{frequencyrangle2.eps}
-	\caption{Frequency range test result}
+	\includegraphics[width=3.5in]{frequencywide58-62.eps}
+\color{red}{\caption{Frequency range test result}}
 	\label{fig_2}										
 \end{figure}
 \begin{figure}[t]
@@ -454,6 +458,33 @@ x_s(n)=&\sum_{h=1}^{H}\dfrac{A_h}{2}\left(e^{j\left((h\omega_r+\omega_\mathrm{no
 	\caption{Harmonic distortion test result}
 	\label{fig_4}									
 \end{figure}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=3.5in]{ramp.eps}
+	\color{red}{\caption{Frequency ramping test result}}
+	\label{fig_5}									
+\end{figure}
+
+\begin{figure}
+	\centering
+	
+	\subfigure[]
+	{
+		\includegraphics[width=1.62in]{stepchange.eps}
+		\label{fig:a}
+	}
+	\subfigure[]
+	{
+		\includegraphics[width=1.62in]{anglestepchange.eps}
+		\label{fig:b}
+	}
+ 	\color{red}{\caption{Step change test results.
+		(a)Frequency step change; (b)Angle  step change;}}
+	\label{fig.6}
+\end{figure}
+
+
 It can be seen from  \eqref{eqn_5} that the frequency components of $x(n)$ are all shifted  from $h\omega_r$ and $-h\omega_r$ to $h\omega_r+\omega_\mathrm{nom}$ and $-h\omega_r+\omega_\mathrm{nom}$, respectively. Consequently, the spectral line of fundamental components are shifted around 0 Hz in frequency domain since the $f_r$ slight fluctuates around $f_\mathrm{nom}$.
 
 To eliminate the spectral interferences of harmonic, a moving average filter is applied on the shifted signal $x_s(n)$. The  moving average filter $h_\mathrm{av}$ of length $M$ can be expressed as 
@@ -512,11 +543,13 @@ f_\mathrm{est}=f_\mathrm{nom}+\Delta f\label{eqn_13}
 \section{Simulation results and analysis}
 Simulations are conducted to validate the performance of the proposed approach. The performance is also compared with FDR algorithm\cite{chenjian,7265090}, which is denoted as RDFT in this section. The nominal frequency $f_\mathrm{nom}$ is 60 Hz and the sampling rate $f_s$ is 1440 Hz. Note that both algorithms were implemented in a “sliding window” approach, i.e., continuously shifting the estimation window by a single sample, which means that the frequency estimation rate is equal to sampling rate $f_s$. Since the order $p$ influences of accuracy and computational burden, the proposed approach with $p$ from 1 to 4 are evaluated. For each test scenario, 10000 simulation runs have been performed to evaluate the statistical properties.
 
-For the frequency range test, the  frequency of  input sinusoidal signal  varies from 59.9 Hz to 60.1 Hz with the step 0.01 Hz. The results is shown in Fig.~\ref{fig_2}. It can be seen that accuracy of the proposed method is proportional to the $p$. Moreover, the proposed method with  $p\geq2$ can offer a better accuracy compared to the RDFT.
+\textcolor{red}{For the frequency range test, the  frequency of  input sinusoidal signal  varies from 58 Hz to 62 Hz with according to IEEE Standard C37.118.1. The results is shown in Fig.~\ref{fig_2}.} It can be seen that accuracy of the proposed method is proportional to the $p$. Moreover, the proposed method with  $p>2$ can offer a better accuracy compared to the RDFT.
 
-To evaluate the performance with white noise, Gaussian white noise with zero mean is superposed on the 59.95 Hz test signal. The accuracy is evaluated under different Signal-to-Noise Ratios (SNR) ranging from 20 to 100 dB at an increment of 10 dB. The Cramer–Rao lower bound (CRLB) is also used to provide a quantitative benchmark of measurement error as shown in Fig.~\ref{fig_3}. In this semilog plot, it can be seen that the proposed method with larger $p$ is closer to the CRLB. The results also  demonstrates that the  proposed method with $p\geq2$ has high reliability and accuracy in a noisy signal environment than conventional RDFT.
+To evaluate the performance with white noise, Gaussian white noise with zero mean is superposed on the 59.95 Hz test signal. The accuracy is evaluated under different Signal-to-Noise Ratios (SNR) ranging from 20 to 100 dB at an increment of 10 dB. The Cramer–Rao lower bound (CRLB) is also used to provide a quantitative benchmark of measurement error as shown in Fig.~\ref{fig_3}. \textcolor{red}{In this semilog plot, it can be seen that the proposed method with larger $p$ is closer to the CRLB. The results also  demonstrates that the  proposed method with $p\geq2$ has high reliability and accuracy in a noisy signal environment than conventional RDFT, which proves robustness of the proposed method.}
 
 For harmonic distortion test, the test signal consists of a fundamental frequency component and an odd harmonic component ranging from 3rd order  to 11th order. The magnitude is 0.1 p.u.~(20 dB with respect to the fundamental component), which is the worst condition according to the IEEE  C37.118 standard\cite{c37}. Besides, 80 dB white noise is added, which is selected based on the study of noise at the distribution level grid in Ref.~\cite{7051271}. From Fig.~\ref{fig_4}, the error of the proposed method is within 0.2 mHz and much less than the 5 mHz requirement for P-class PMU in the C37 standard. We can safely conclude that the proposed method is immune to the harmonic distortion.
+
+\textcolor{red}{ To assess dynamic performance of the proposed method, frequency ramp and step-change tests are conducted. For the ramping test, it can be seen in Fig.~\ref{fig_5} that the frequency change trend can be well-captured using proposed method. For the step change test results in Fig.~\ref{fig.6}, the response time of the proposed is as short as 0.3 seconds when $p\le3 $, which is faster than the conventional RDFT method. From the Fig.~\ref{fig.6}(b), the frequency spike of the proposed method are much smaller than RDFT.}
 
 The comparative results of computation time  are listed in Table~\ref{table_1}. The  results confirm the superiority of the proposed algorithm in lower computational complexity. Taking account all the above results, to balance the trade-off between accuracy and estimation time, $p=2$ can be considered as reasonable selection in practical implementation  since keeping increasing $p$ does not improve the performance significantly but introducing much higher computational effort.
 \begin{table}

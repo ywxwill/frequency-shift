@@ -292,12 +292,12 @@
 % was not built to handle multiple paragraphs
 %
 \author{Jianmin Li,~
-		Zhaosheng Teng,~Wenxuan Yao,~Yajun Wang,
+		Zhaosheng Teng,~Wenxuan Yao,~Yajun Wang,~Shutang You,
 		and~Yilu Liu, \IEEEmembership{Fellow,~IEEE}% <-this % stops a space
 		
 			
 		\thanks{J.  Li and Z. Teng are with the College of Electrical and Information Engineering, Hunan University, Changsha 410082, China(e-mail: ljmdzyx@163.com; tengzs@126.com)} % <-this % stops a space
-		\thanks{W. Yao, Y. Wang and Y. Liu are with the Department of Electrical Engineering and Computer Science, the University of Tennessee, Knoxville, TN, 37996, USA (e-mails:wyao3@utk.edu; ywang139@vols.utk.edu; liu@utk.edu).}
+		\thanks{W. Yao, Y. Wang, S. You, and Y. Liu are with the Department of Electrical Engineering and Computer Science, the University of Tennessee, Knoxville, TN, 37996, USA (e-mails:wyao3@utk.edu; ywang139@vols.utk.edu;syou3@vols.utk.edu; liu@utk.edu).}
 		\thanks{W. Yao and Y. Liu are also with  Oak Ridge National Laboratory, Oak Ridge, TN, USA, 37831}
 		}% <-this % stops a space
 
@@ -397,7 +397,7 @@ However, the WIDFT involve computationally expensive procedures of solving high-
 A Recursive DFT (RDFT) calculation method was developed by A.~G.~Phadke and J.~S.~Thorp with significant reduction on computational complexity\cite{5519136}. To achieve the high accuracy under  off-nominal condition, calculation of least square estimation and resample is applied on RDFT\cite{chenjian}. This approach has been successfully implemented in  Frequency Disturbance
 Recorders (FDRs) of FNET/Grideye with reporting rate 10 Hz for providing synchronized frequency measurement at worldwide distribution level power grid\cite{7265090}.
 
- \textcolor{red}{However, for  applications such as instantaneous relay protection\cite{PRC-024-1},fast system dynamic response prediction\cite{6863288,CIGRE,68632881} and instant frequency-based load control \cite{7976165}, a much higher reporting rate of  measurements, e.g. 120Hz or 240 Hz, is needed to capture the transient behavior. For example, according the result in Ref.\cite{CIGRE,68632881}, a higher reporting rate leads to a faster prediction of system dynamic response under disturbance.  Unfortunately, the execution time of RDFT in real hardware implementation can not meet the real-time requirement.
+ \textcolor{red}{However, for  applications such as instantaneous relay protection\cite{PRC-024-1}, fast system dynamic response prediction\cite{6863288,CIGRE,68632881}, sub-synchronous resonance measurement \cite{7098450} and instant frequency-based load control \cite{7976165}, a much higher reporting rate of  measurements, e.g. 120Hz or 240 Hz, is needed to capture the transient behavior. For example, according the result in Ref.\cite{CIGRE,68632881}, a higher reporting rate leads to a faster prediction of system dynamic response under disturbance.  Unfortunately, the execution time of RDFT in real hardware implementation can not meet the real-time requirement.
  For example, the digital signal processor used in FDR needs more than 50 ms for executing a RDFT. As a result, there is no room for FDR to increase reporting rate even from 10Hz to 30Hz. }. Therefore,  the necessity to explore a more efficient frequency estimation approach with  a satisfactory performance arises.
 
  In this paper, a fast frequency estimation approach is proposed for practical application using frequency-shift filtering. The spectrum shifting in frequency domain  is a  digital signal processing technique used for removing interference and noise from a wanted signal\cite{fresh}. 

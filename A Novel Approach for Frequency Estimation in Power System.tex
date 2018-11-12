@@ -294,7 +294,7 @@
 \author{Jianmin Li,~
 		Zhaosheng Teng,~Yajun Wang,~Shutang You,
 		Yilu Liu,~\IEEEmembership{Fellow,~IEEE}, and~Wenxuan Yao% <-this % stops a space
-		
+			\thanks{Manuscript received  June 29, 2018; revised  September 10, 2018 and October 23, 2018; accepted November 4, 2018. Paper no. PESL-00145-2018. This work is supported by National Natural Science Foundation of China under Grant No.51377049. (Corresponding author: Wenxuan Yao)} 
 			
 		\thanks{J.  Li and Z. Teng are with the College of Electrical and Information Engineering, Hunan University, Changsha 410082, China(e-mail: ljmdzyx@163.com; tengzs@126.com)} % <-this % stops a space
 		\thanks{Y. Wang, S. You, Y. Liu and W. Yao are with the Department of Electrical Engineering and Computer Science, the University of Tennessee, Knoxville, TN, 37996, USA (e-mails: ywang139@vols.utk.edu; syou3@vols.utk.edu; liu@utk.edu; wyao3@utk.edu).}
@@ -394,12 +394,12 @@ Among them, DFT based methods is the most commonly
 used techniques in commercial Phasor Measurement Units (PMUs) and digital relays for frequency estimation due to its advantage of easy hardware implementation and harmonic immunity\cite{7277049,5876287}. To reduce the influence of spectral leakage, Windowed Interpolation DFT (WIDFT) algorithm was used to improve the performance under the conditions of asynchronous sampling\cite{4956674}.
 However, the WIDFT involve computationally expensive procedures of solving high-order equations.
 A Recursive DFT (RDFT) calculation method was developed by A.~G.~Phadke and J.~S.~Thorp with significant reduction on computational complexity\cite{5519136}. To achieve the high accuracy under  off-nominal condition, calculation of least square estimation and resample is applied on RDFT\cite{chenjian}. This approach has been successfully implemented in  Frequency Disturbance
-Recorders (FDRs) of FNET/Grideye with reporting rate 10 Hz for providing synchronized frequency measurement at worldwide distribution level power grid\cite{7265090}.
+Recorders (FDRs) of FNET/Grideye with reporting rate 10 Hz for providing synchronized frequency measurement at worldwide distribution level power grid \cite{7265090,7849130}.
 
- However, for  applications such as instantaneous relay protection\cite{PRC-024-1}, fast system dynamic response prediction\cite{6863288,CIGRE,68632881}, sub-synchronous resonance measurement \cite{7098450} and instant frequency-based load control \cite{7976165}, a much higher reporting rate of  measurements, e.g. 120Hz or 240 Hz, is needed to capture the transient behavior. For example, according the result in Ref.\cite{CIGRE,68632881}, a higher reporting rate leads to a faster prediction of system dynamic response under disturbance.  Unfortunately, the execution time of RDFT in real hardware implementation can not meet the real-time requirement.
+ However, for  applications such as instantaneous relay protection\cite{PRC-024-1}, fast system dynamic response prediction\cite{6863288,68632881}, sub-synchronous resonance measurement \cite{7098450} and instant frequency-based load control\cite{7976165}, a much higher reporting rate of  measurements, e.g. 120Hz or 240 Hz, is needed to capture the transient behavior. For example, according to the result in Ref.\cite{68632881}, a higher reporting rate leads to a faster prediction of system dynamic response under disturbance.  Unfortunately, the execution time of RDFT in real hardware implementation can not meet the real-time requirement.
  For example, the digital signal processor used in FDR needs more than 50 ms for executing a RDFT. As a result, there is no room for FDR to increase reporting rate even from 10~Hz to 30~Hz. Therefore,  the necessity to explore a more efficient frequency estimation approach with  a satisfactory performance arises.
 
- In this paper, a fast frequency estimation approach is proposed for practical application using frequency-shift filtering. The spectrum shifting in frequency domain  is a  digital signal processing technique used for removing interference and noise from a wanted signal\cite{fresh}. Following this, in our approach the  fundamental component of power grid signal (around 60~Hz or 50~Hz) is shifted to 0 Hz nearby and then a Convolution Averaging Filter (CAF) is applied to eliminate spectral interferences and white noise. The extensive computation of least square estimation and resample process in RDFT can be avoided. It has major advantages of high accuracy and low computational complexity.
+ In this paper, a fast frequency estimation approach is proposed for practical application using frequency-shift filtering. The spectrum shifting in frequency domain  is a  digital signal processing technique used for removing interference and noise from a wanted signal\cite{fresh}. Following this, in our approach the  fundamental component of power grid signal (around 60~Hz or 50~Hz) is shifted to 0 Hz nearby and then a Convolution Averaging Filter (CAF) is applied to eliminate the negative effects from spectral interferences and white noise. The extensive computation of least square estimation and resample process in RDFT can be avoided. It has major advantages of high accuracy and low computational complexity.
 %----------------------------------------------------------------------
 % SECTION II:
 %----------------------------------------------------------------------
@@ -513,8 +513,8 @@ h_p(n)=\underbrace{h_{av}(m)*\cdots*h_{av}(m)}_{p}\label{eqn_9}
 \end{equation}
 where $*$ denotes convolution operation, $p$ represents the number of the CAF. The  length of the $p$th order CAF is $p(M-1)+1$. Since coefficients of CAF are fixed with a certain $p$, they can be pre-computed to decrease computational burden and only one time convolution calculation between $x_s(n)$ and $h_p(n)$ is needed. 
 
-The magnitude frequency response of the first order CAF to the fourth order CAF are illustrated in Fig.~\ref{fig_1}. It can be observed in Fig.~\ref{fig_1} that the capacity of interference inhibition  of CAF is proportional to the convolution order $p$. Defining the length of truncation window  for original filter is $L$, the computational complexity of the proposed method is $O(pML)$, where  $O( )$ means time complexity
-notation.
+The magnitude frequency response of the first order CAF to the fourth order CAF are illustrated in Fig.~\ref{fig_1}. It can be observed in Fig.~\ref{fig_1} that the capacity of interference inhibition  of CAF is proportional to the convolution order $p$. Defining the length of truncation window  for origina  filter is $L$, the computational complexity of the proposed method is $O(pML)$.
+
 The signal after applying frequency shifting and CAF  can be approximated  as
 \begin{equation}
 x_f(n)=h_p(n)*x_s(n)\approx\sum_{n=-\infty}^{\infty}\dfrac{A_h}{2}e^{j\left((\omega_\mathrm{nom}-\omega_r)n+\varphi_1\right)}\label{eqn_10}
@@ -531,27 +531,27 @@ x_f(n)=h_p(n)*x_s(n)\approx\sum_{n=-\infty}^{\infty}\dfrac{A_h}{2}e^{j\left((\om
 Then the frequency deviation can be obtained using phase difference of two points ($n_1$ and $n_2$) in $x_f(n)$ as
 
 \begin{equation}
-\Delta f=\dfrac{(\arg(x_f(n_1))-\arg(x_f(n_2))Mf_\mathrm{nom}}{2\pi(n_1-n_2)}.\label{eqn_12}
+\Delta f=\dfrac{(\arg(x_f(n_2))-\arg(x_f(n_1))Mf_\mathrm{nom}}{2\pi(n_2-n_1)}.\label{eqn_12}
 \end{equation}
 Consequently, the estimated fundamental frequency is
 \begin{equation}
-f_\mathrm{est}=f_\mathrm{nom}+\Delta f\label{eqn_13}
+f_\mathrm{est}=f_\mathrm{nom}-\Delta f\label{eqn_13}
 \end{equation}
 %----------------------------------------------------------------------
 % SECTION III: 
 %----------------------------------------------------------
 \section{Simulation results and analysis}
-Simulations are conducted to validate the performance of the proposed approach. The performance is also compared with FDR algorithm\cite{chenjian,7265090}, which is denoted as RDFT in this section. The nominal frequency $f_\mathrm{nom}$ is 60 Hz and the sampling rate $f_s$ is 1440 Hz. Note that both algorithms were implemented in a “sliding window” approach, i.e., continuously shifting the estimation window by a single sample, which means that the frequency estimation rate is equal to sampling rate $f_s$. Since the order $p$ influences of accuracy and computational burden, the proposed approach with $p$ from 1 to 4 are evaluated. For each test scenario, 10000 simulation runs have been performed to evaluate the statistical properties.
+Simulations are conducted to validate the performance of the proposed approach. The performance is also compared with FDR algorithm\cite{chenjian,7265090}, which is denoted as RDFT in this section. The nominal frequency $f_\mathrm{nom}$ is 60 Hz and the sampling rate $f_s$ is 1440 Hz. Note that both algorithms were implemented in a “sliding window” approach, i.e., continuously shifting the estimation window by a single sample, which means that the frequency estimation rate is equal to sampling rate $f_s$. Since the order $p$ influences of accuracy and computational burden, the proposed approach with $p$ from 1 to 4 are evaluated. For each test scenario, 10000 simulation runs have been conducted to evaluate the statistical properties. In this simulation, $n_1$ and $n_2$ are 96 and 168, respectively.
 
-For the frequency range test, the  frequency of  input sinusoidal signal  varies from 58 Hz to 62 Hz with according to IEEE Standard C37.118.1. The results is shown in \textcolor{red}{ Fig.~\ref{fig_2}.} It can be seen that accuracy of the proposed method is proportional to the $p$. Moreover, the proposed method with  $p>2$ can offer a better accuracy compared to the RDFT.
+For the frequency range test, the  frequency of  input sinusoidal signal  varies from 58 Hz to 62 Hz with according to IEEE Standard C37.118.1. The results is shown in  Fig.~\ref{fig_2}.  It can be seen that accuracy of the proposed method is proportional to the $p$. Moreover, the proposed method with  $p>2$ can offer a better accuracy compared to the RDFT.
 
 To evaluate the performance with white noise, Gaussian white noise with zero mean is superposed on the 59.95 Hz test signal. The accuracy is evaluated under different Signal-to-Noise Ratios (SNR) ranging from 20 to 100 dB at an increment of 10 dB. The Cramer–Rao lower bound (CRLB) is also used to provide a quantitative benchmark of measurement error as shown in Fig.~\ref{fig_3}. In this semilog plot, it can be seen that the proposed method with larger $p$ is closer to the CRLB. The results also  demonstrates that the  proposed method with $p\geq2$ has high reliability and accuracy in a noisy signal environment than conventional RDFT, which proves robustness of the proposed method.
 
-For harmonic distortion test, the test signal consists of a fundamental frequency component and an odd harmonic component ranging from 3rd order  to 11th order. The magnitude is 0.1 p.u, which is the worst condition according to the IEEE  C37.118 standard\cite{c37}. Besides, 80 dB white noise is added according to study of noise level at the distribution power grid in Ref.~\cite{7051271}. From Fig.~\ref{fig_4}, the error of the proposed method is within 0.2 mHz and much less than the 5 mHz requirement for P-class PMU in the C37 standard. We can safely conclude that the proposed method is immune to the harmonic distortion.
+For harmonic distortion test, the test signal consists of a fundamental frequency component and an odd harmonic component ranging from 3rd order  to 11th order with 80 dB white noise. The magnitude is 0.1 p.u, which is the worst condition according to the IEEE  C37.118 standard\cite{c37}. From Fig.~\ref{fig_4}, the error of the proposed method is within 0.2 mHz and much less than the 5 mHz requirement for P-class PMU in the C37 standard. We can safely conclude that the proposed method is immune to the harmonic distortion.
 
- \textcolor{red}{To assess dynamic performance of the proposed method, frequency ramp and step change tests are conducted}. For the ramping test, it can be seen in \textcolor{red}{ Fig.~\ref{fig_5}} that the frequency change trend can be well-captured using proposed method. \textcolor{red}{For the step change test, the response time of the proposed is as short as 0.1 seconds when $p\le3 $ as shown in Fig.~\ref{fig_6}}, which is faster than the conventional RDFT method. From the  \textcolor{red}{ Fig.~\ref{fig_6}(b), the frequency spike of the proposed method during the angle step change is much smaller than RDFT}.
+ To assess dynamic performance of the proposed method, frequency ramp and step change tests are conducted. For the ramping test, it can be seen in  Fig.~\ref{fig_5} that the frequency change trend can be well-captured using proposed method. For the step change test, the response time of the proposed is as short as 0.1 seconds when $p\le3 $ as shown in Fig.~\ref{fig_6}, which is faster than the conventional RDFT method. From the   Fig.~\ref{fig_6}(b), the frequency spike of the proposed method during the angle step change is smaller than RDFT.
 
-The comparative results of computation time for simulation on a 3.2 GHz Dual-core computer are listed in Table~\ref{table_1}. It is noted that in the hardware implementation, the calculation time will be longer than the simulation scenario since the speed of computation unit in an embedded system is lower than  the simulation platform. The  simulation results confirm the superiority of the proposed algorithm in lower computational complexity. Taking account all the above results, to balance the trade-off between accuracy and estimation time, $p=3$ can be considered as reasonable selection in practical implementation  since keeping increasing $p$ does not improve the performance significantly but introducing  higher computational effort.
+The comparative results of computation time for simulation on a 3.2 GHz Dual-core computer are listed in Table~\ref{table_1}. It is noted that in the hardware implementation, the calculation time will be longer than the simulation scenario since the speed of computation unit in an embedded system is lower than  the simulation platform. The  simulation results confirm the superiority of the proposed algorithm in lower computational complexity. Taking account all the above results, to balance the trade-off between accuracy and estimation time, $p=3$ can be considered as reasonable selection in practical implementation.
  
 \begin{table}
 	\renewcommand{\arraystretch}{1.3}
@@ -571,9 +571,10 @@ The comparative results of computation time for simulation on a 3.2 GHz Dual-cor
 % SECTION IV: Conclusion
 %----------------------------------------------------------------------
 \section{Conclusion}
-In this letter, a novel  frequency estimation approach combining frequency shifting and convolution average filtering is proposed. The simulation results show that the proposed method has merit of low computational complexity, robust performance in the presence of noise, harmonic and off-nominal conditions. There advantages make it appropriate and promising for the real-time application in digital relays and  high reporting rate synchronized measurement devices.
+In this letter, a fast  frequency estimation approach combining frequency shifting and convolution average filtering is proposed. The simulation results show that the proposed method has merit of low computational complexity, robust performance in the presence of noise, harmonic and off-nominal conditions. There advantages make it appropriate and promising for the real-time application in digital relays and  high reporting rate synchronized measurement devices.
 \bibliographystyle{IEEEtran}
 %\bibliography{IEEEabrv,FreqEs}
+% Generated by IEEEtran.bst, version: 1.14 (2015/08/26)
 % Generated by IEEEtran.bst, version: 1.14 (2015/08/26)
 \begin{thebibliography}{10}
 	\providecommand{\url}[1]{#1}
@@ -598,7 +599,7 @@ In this letter, a novel  frequency estimation approach combining frequency shift
 	\BIBdecl
 	
 	\bibitem{7438889}
-	L.~Zhan, Y.~Liu, and Y.~Liu, ``A clarke transformation-based DFT phasor and
+	L.~Zhan, Y.~Liu, and Y.~Liu, ``A clarke transformation-based dft phasor and
 	frequency algorithm for wide frequency range,'' \emph{IEEE Trans. Smart
 		Grid}, vol.~9, no.~1, pp. 67--77, Jan 2018.
 	
@@ -631,7 +632,7 @@ In this letter, a novel  frequency estimation approach combining frequency shift
 	vol.~26, no.~4, pp. 2887--2889, Oct 2011.
 	
 	\bibitem{4956674}
-	D.~Belega and D.~Dallet, ``Multipoint interpolated DFT method for frequency
+	D.~Belega and D.~Dallet, ``Multipoint interpolated dft method for frequency
 	estimation,'' in \emph{2009 6th International Multi-Conference on Systems,
 		Signals and Devices}, March 2009, pp. 1--6.
 	
@@ -643,8 +644,8 @@ In this letter, a novel  frequency estimation approach combining frequency shift
 	
 	\bibitem{chenjian}
 	J.~Chen, ``Accurate frequency estimation with phasor angles,'' \emph{Master.
-		Dissertation, Electrical Engineering, Virginia Polytechnic Institute and State
-		University, Blacksburg}, 1994.
+		Dissertation, Electrical Engineering, Virginia Polytechnic Institute and
+		State University, Blacksburg}, 1994.
 	
 	\bibitem{7265090}
 	Y.~Liu, L.~Zhan, Y.~Zhang, P.~N. Markham, D.~Zhou, J.~Guo, Y.~Lei, G.~Kou,
@@ -652,7 +653,12 @@ In this letter, a novel  frequency estimation approach combining frequency shift
 	the distribution level: An FNET/Grideye example,'' \emph{IEEE Trans. Power
 		Delivery}, vol.~31, no.~2, pp. 721--731, April 2016.
 	
-  \bibitem{PRC-024-1}
+	\bibitem{7849130}
+	Y.~Liu, S.~You, W.~Yao, Y.~Cui, L.~Wu, D.~Zhou, J.~Zhao, H.~Liu, and Y.~Liu,
+	``A distribution level wide area monitoring system for the electric power
+	grid–FNET/Grideye,'' \emph{IEEE Access}, vol.~5, pp. 2329--2338, 2017.
+	
+	\bibitem{PRC-024-1}
 	\emph{PRC-024-2—Generator Frequency and Voltage Protective Relay}, North
 	American Electric Reliability Corporation, May, 2015 Std.
 	
@@ -660,26 +666,23 @@ In this letter, a novel  frequency estimation approach combining frequency shift
 	C.~Li, Y.~Liu, K.~Sun, Y.~Liu, and N.~Bhatt, ``Measurement based power system
 	dynamics prediction with multivariate autoregressive model,'' in \emph{IEEE
 		PES T\&D Conference and Exposition}, April 2014, pp. 1--5.
-\bibitem{CIGRE}
-	C.~Li, J.~Chai, Y.~Liu, N.~Bhatt, A.~D. Rosso, and E.~Farantatos, ``Power
-	system dynamics prediction with measurement-based autoregressive model,''
-	\emph{CIGRE Conference Grid of the Future Symposium, Houston}, 2014.
-
-\bibitem{68632881}
+	
+	\bibitem{68632881}
 	J.~Chai, ``Wide-area measurement-based applications for power system monitoring
-	and dynamic modeling,'' \emph{PhD. Dissertation, Electrical Engineering, University of
+	and dynamic modeling,'' \emph{Electrical Engineering, University of
 		Tennessee, Knoxville,}, 2016.
 	
-\bibitem{7098450}
+	\bibitem{7098450}
 	A.~Adrees and J.~V. Milanović, ``Optimal compensation of transmission lines
 	based on minimisation of the risk of subsynchronous resonance,'' \emph{IEEE
 		Trans. Power Syst.}, vol.~31, no.~2, pp. 1038--1047, March 2016.
-		\bibitem{7976165}
+	
+	\bibitem{7976165}
 	Q.~Shi, H.~Cui, F.~Li, Y.~Liu, W.~Ju, and Y.~Sun, ``A hybrid dynamic demand
 	control strategy for power system frequency regulation,'' \emph{CSEE Journal
 		of Power and Energy Systems}, vol.~3, no.~2, pp. 176--185, June 2017.
 	
-   \bibitem{fresh}
+	\bibitem{fresh}
 	J.~F. Adlard, ``Frequency shift filtering for cyclostationary signals,''
 	\emph{PhD. Dissertation, Department of Electronics University of York}, 2000.
 	
@@ -687,12 +690,10 @@ In this letter, a novel  frequency estimation approach combining frequency shift
 	\emph{IEEE Standard for Synchrophasors for Power System C37.118.1}, Power
 	System Relaying Committee of the Power Engineering Society Std.
 	
-	\bibitem{7051271}
-	L.~Zhan, Y.~Liu, J.~Culliss, J.~Zhao, and Y.~Liu, ``Dynamic single-phase
-	synchronized phase and frequency estimation at the distribution level,''
-	\emph{IEEE Trans. Smart Grid}, vol.~6, no.~4, pp. 2013--2022, July 2015.
-	
 \end{thebibliography}
+
+
+
 
 \end{document}
 
